@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 export default function POC() {
     const [card, setCard] = useState({
         question: "Question de la carte",
@@ -7,14 +8,18 @@ export default function POC() {
     });
 
     const [isQuestionView, setIsQuestionView] = useState(true);
+    const [test, setTest] = useState('');
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:3000/')
+            .then(res => { setTest(res.data) })
+    })
 
     return (
         <>
-            <div className="text-center">
-                <h1>Leitner Flashcards</h1>
-                <h2>Proof of Concept</h2>
-
-                <div className="mt-10 border-2 border-gray-500 p-5">
+            <div className="text-center h-[100vh]">
+                <div className="border-2 border-gray-500 h-full">
                     {
                         isQuestionView ? (
                             <>
@@ -28,7 +33,12 @@ export default function POC() {
                             </>
                         )
                     }
+                    <p>{test}</p>
                     <button onClick={ () => setIsQuestionView(!isQuestionView) } className='bg-blue-500 text-white p-1 rounded-sm'>Retourner la carte</button>
+                    <div className='flex absolute bottom-0'>
+                        <button className='bg-red-500 text-white p-3 w-[50vw]'>Raté</button>
+                        <button className='bg-green-500 text-white p-3 w-[50vw]'>Réussi</button>
+                    </div>
                 </div>
             </div>
         </> 
