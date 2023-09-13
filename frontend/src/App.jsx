@@ -9,7 +9,6 @@ function App() {
       <Route path="/" element={<POC />}></Route>
     </Routes>
   )
-
 }
 
 export default App
